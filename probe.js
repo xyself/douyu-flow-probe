@@ -1,6 +1,11 @@
 const axios = require('axios');
 const crypto = require('node:crypto');
+const http = require('node:http');
 const OldEngine = require('./douyu-engine');
+
+// minimal HTTP server so Koyeb WEB service stays healthy
+http.createServer((req, res) => { res.writeHead(200); res.end('probe alive'); })
+  .listen(process.env.PORT || 8000);
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 const md5 = (s) => crypto.createHash('md5').update(s, 'utf8').digest('hex');
